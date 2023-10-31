@@ -21,14 +21,14 @@ public class GameController {
         Scanner scanner = new Scanner(System.in);
         System.out.println(WELCOME_MSG);
         System.out.print(INITIAL_MSG);
-        String cardsLine = scanner.nextLine().trim();
+//        String cardsLine = scanner.nextLine().trim();
 
-        List<Card> cards = parseCards(cardsLine);
+//        List<Card> cards = parseCards(cardsLine);
         BoardTable boardTable = BoardTable.getInstance();
 
-//        boardTable.parseBoardFromFile("src/main/resources/board/startBoard.txt");
+        boardTable.parseBoardFromFile("src/main/resources/board/startBoard.txt");
 //        printBoard(boardTable);
-        boardTable.init(cards);
+//        boardTable.init(cards);
 
         int finalScore = 0;
 

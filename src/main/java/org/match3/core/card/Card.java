@@ -49,21 +49,4 @@ public enum Card {
     public boolean isSameValue(final Card card) {
         return value == card.getValue();
     }
-
-    public boolean isAce() {
-        return value == 14;
-    }
-
-    public boolean isClose(final Card card) {
-        if (isAce() && card.isAce()) {
-            return false;
-        }
-        if (isAce() && (card.getValue() == 2 || card.getValue() == 13)) {
-            return true;
-        }
-        if (card.isAce() && (value == 2 || value == 13)) {
-            return true;
-        }
-        return value == card.value + 1 || value == card.value - 1;
-    }
 }

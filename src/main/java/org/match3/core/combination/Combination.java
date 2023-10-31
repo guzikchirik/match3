@@ -1,5 +1,11 @@
 package org.match3.core.combination;
 
+import static java.util.Arrays.asList;
+
+import java.util.Comparator;
+import java.util.List;
+import java.util.stream.IntStream;
+
 import org.match3.core.card.Card;
 
 import lombok.AllArgsConstructor;
@@ -25,11 +31,14 @@ public class Combination {
     }
 
     public boolean isSequence() {
-        if (first.isClose(second) && second.isClose(third) && !(first.isClose(third) || first.isSameValue(third))) {
+        List<Card> cards = asList(first, second, third);
+        cards.sort(Comparator.comparingInt(Card::getValue));
+
+        if (cards.get(0).getValue() == 2 && cards.get(1).getValue() == 3 && cards.get(2).getValue() == 14) {
             return true;
-        } else if (first.isClose(third) && second.isClose(third) && !(first.isClose(second) || first.isSameValue(second))) {
-            return true;
-        } else return first.isClose(second) && first.isClose(third) && !(second.isClose(third) || second.isSameValue(third));
+        }
+        return cards.get(1).getValue() == cards.get(0).getValue() + 1
+                && cards.get(1).getValue() == cards.get(2).getValue() - 1;
     }
 
     public boolean isPureSequence() {
