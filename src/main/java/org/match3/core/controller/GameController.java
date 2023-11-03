@@ -1,8 +1,6 @@
 package org.match3.core.controller;
 
-import static org.match3.core.msg.Message.COMMANDS_MSG;
-import static org.match3.core.msg.Message.INITIAL_MSG;
-import static org.match3.core.msg.Message.WELCOME_MSG;
+import static org.match3.core.msg.Message.*;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -20,21 +18,43 @@ public class GameController {
 
         Scanner scanner = new Scanner(System.in);
         System.out.println(WELCOME_MSG);
+        System.out.println(MODES);
+        int mode = Integer.parseInt(scanner.nextLine().trim());
+        if (mode == 1) {
+            startSimpleGame(scanner);
+        } else if (mode == 2) {
+            startInvestigationGame(scanner);
+        } else {
+            System.out.println("Wrong mode");
+
+        }
+    }
+
+    private void startSimpleGame(Scanner scanner) {
+        System.out.println(SIMPLE_GAME_MODE);
         System.out.print(INITIAL_MSG);
-//        String cardsLine = scanner.nextLine().trim();
+        String cardsLine = scanner.nextLine().trim();
 
-//        List<Card> cards = parseCards(cardsLine);
+        List<Card> cards = parseCards(cardsLine);
         BoardTable boardTable = BoardTable.getInstance();
+        boardTable.init(cards);
+        mainAlgorithm(scanner, boardTable);
+    }
 
+    private void startInvestigationGame(Scanner scanner) {
+        System.out.println(MODELING_BOARD_MODE);
+
+        BoardTable boardTable = BoardTable.getInstance();
         boardTable.parseBoardFromFile("src/main/resources/board/startBoard.txt");
-//        printBoard(boardTable);
-//        boardTable.init(cards);
+        mainAlgorithm(scanner, boardTable);
+    }
 
+    private void mainAlgorithm(Scanner scanner, BoardTable boardTable) {
         int finalScore = 0;
 
         printBoard(boardTable);
 
-        System.out.print(COMMANDS_MSG);
+        System.out.println(COMMANDS_MSG);
         do {
             String commandLine = scanner.nextLine().trim();
             if (commandLine.equals("exit")) {
